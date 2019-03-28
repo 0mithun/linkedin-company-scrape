@@ -21,14 +21,15 @@ email = browser.find_element_by_xpath('//*[@id="login-email"]')
 password = browser.find_element_by_xpath('//*[@id="login-password"]')
 submit = browser.find_element_by_xpath('//*[@id="login-submit"]')
 
-email.send_keys('ratan01828@gmail.com')
-password.send_keys('(P@ssFast123^!)_')
+email.send_keys('')
+password.send_keys('')
 submit.click()
 time.sleep(2)
 
 # search_url = 'https://www.linkedin.com/search/results/companies/?keywords=Marketing%20and%20Advertising&origin=GLOBAL_SEARCH_HEADER&page={}'.format(i)
 
-for page in range(2, 3):
+for page in range(1, 10):
+    print('Page Number {} processing.....'.format(1))
     search_url = 'https://www.linkedin.com/search/results/companies/?keywords=Marketing%20and%20Advertising&origin=GLOBAL_SEARCH_HEADER&page={}'.format(page)
     # search_url = str(search_url)
     browser.get(search_url)
@@ -44,7 +45,6 @@ for page in range(2, 3):
             browser.get(full_url)
             time.sleep(2)
             single_page_soup = BeautifulSoup(browser.page_source, 'lxml')
-            print(full_url)
             try:
                 location  = single_page_soup.find('div', class_="org-top-card-summary__info-item org-top-card-summary__headquarter").text.strip()
                 company_name= single_page_soup.find('h1', class_='org-top-card-summary__title')['title'].strip()
@@ -55,8 +55,8 @@ for page in range(2, 3):
                 pass
         except TypeError:
             pass
-    print('-'*100)
-    break
+    print('Page Number {} Completed'.format(1))
+
 
 def write_csv(data, filename="file2.csv"):
     with open(filename, 'w', newline='') as csvfile:
