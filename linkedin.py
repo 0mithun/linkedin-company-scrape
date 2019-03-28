@@ -29,7 +29,7 @@ time.sleep(2)
 # search_url = 'https://www.linkedin.com/search/results/companies/?keywords=Marketing%20and%20Advertising&origin=GLOBAL_SEARCH_HEADER&page={}'.format(i)
 
 for page in range(1, 10):
-    print('Page Number {} processing.....'.format(1))
+    print('Page Number {} processing.....'.format(page))
     search_url = 'https://www.linkedin.com/search/results/companies/?keywords=Marketing%20and%20Advertising&origin=GLOBAL_SEARCH_HEADER&page={}'.format(page)
     # search_url = str(search_url)
     browser.get(search_url)
