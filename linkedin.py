@@ -42,23 +42,28 @@ for page in range(2, 3):
             company_url = company_url['href']
             full_url = 'https://www.linkedin.com'+ company_url + 'about'
             browser.get(full_url)
-            time.sleep(5)
+            time.sleep(2)
             single_page_soup = BeautifulSoup(browser.page_source, 'lxml')
-            location  = single_page_soup.find('div', class_="org-top-card-summary__info-item org-top-card-summary__headquarter").text
-            company_name= single_page_soup.find('a', class_='company-name-link').text 
-
-            company_website = single_page_soup.find('a', class_="link-without-visited-state")['href']
-
-            print(location, company_name, company_website)
-            break
+            print(full_url)
+            try:
+                location  = single_page_soup.find('div', class_="org-top-card-summary__info-item org-top-card-summary__headquarter").text.strip()
+                company_name= single_page_soup.find('h1', class_='org-top-card-summary__title')['title'].strip()
+                company_website = single_page_soup.find('span', class_="link-without-visited-state").text.strip()
+                company={'name':company_name, 'website': company_website, 'location': location}
+                data.append(company)
+            except AttributeError:
+                pass
         except TypeError:
             pass
     print('-'*100)
     break
 
-
-
-    data.append(search_items)
+def write_csv(data, filename="file2.csv"):
+    with open(filename, 'w', newline='') as csvfile:
+        f = csv.writer(csvfile)
+        for line in data:
+            f.writerow([line['name'], line['location'], line['website']])
+write_csv(data)
 
 
 
